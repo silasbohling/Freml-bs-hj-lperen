@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ActivityIndicator, FlatList, Dimensions } from 'react-native';
-import Api from './components/Api';
-import Card from './components/Card';
 import Carousel from 'react-native-snap-carousel';
-
-const cityId = "6543938";
+import Api from '@services/Api';
+import Card from '@components/Card';
+import Utils from '@modules/Utils';
+import Colors from '@modules/Colors';
+import Config from './app/Config';
 
 export default class App extends React.Component {
 
@@ -27,18 +28,18 @@ export default class App extends React.Component {
   loadSetting = () => {
     this.setState({ loading: true });
 
-    Api.currentCityWeather(cityId).then( (data) => {
+    Api.currentCityWeather(Config.cityId).then( (data) => {
       console.log({data});
       if (data.cod == 200) {
         var temperatures = [];
         for (var i = 0; i < 9; i++) {
           const temp = data.list[i].main.temp;
           const time = data.list[i].dt;
-          const setting = this.calculateSetting(data.list[i].main.temp);
+          const setting = Utils.calculateSetting(data.list[i].main.temp);
           temperatures.push({ temp, time, setting });
         }
-        var averageTemp = this.average(temperatures);
-        const settingTemp = this.calculateSetting(averageTemp);
+        var averageTemp = this.averageTemp(temperatures);
+        const settingTemp = Utils.calculateSetting(averageTemp);
         const city = data.city.name;
         averageTemp = Math.round(averageTemp*10)/10 + ' C°';
         this.setState({
@@ -64,33 +65,17 @@ export default class App extends React.Component {
     });
   }
 
-  average = (list) => {
+  averageTemp = (list) => {
     var sum = 0;
     list.forEach( item => sum += item.temp);
     return sum/list.length;
-  }
-
-  calculateSetting = (x) => {
-    const y = 0*Math.pow(x,2)-0.05*x+3.78;
-    return Math.round(y*10)/10;
-  }
-
-  wp = (percentage) => {
-    const { width: viewportWidth } = Dimensions.get('window');
-    const value = (percentage * viewportWidth) / 100;
-    return Math.round(value);
-  }
-  hp = (percentage) => {
-    const { height: viewportHeight } = Dimensions.get('window');
-    const value = (percentage * viewportHeight) / 100;
-    return Math.round(value);
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.primary}>
-          <Image  style={styles.logo} source={ require('./assets/fjernvarme-logo.png') } />
+          <Image  style={styles.logo} source={ require('./app/assets/fjernvarme-logo.png') } />
           <View style={styles.dataContainer}>
             <View style={styles.dataBlock}>
               <Text style={styles.label}>{ this.state.city }</Text>
@@ -104,7 +89,7 @@ export default class App extends React.Component {
           { this.state.loading &&
             <ActivityIndicator animating={this.state.loading} size="large" color="rgb(183,32,33)"/>
           }
-          <TouchableOpacity style={styles.btn} onPress={ this.loadSetting }>
+          <TouchableOpacity style={styles.btn} onPress={this.loadSetting}>
             <Text style={styles.btnText}>OPDATER</Text>
           </TouchableOpacity>
           { this.state.error &&
@@ -119,8 +104,8 @@ export default class App extends React.Component {
           <Carousel
             data={["list", "chart"]}
             renderItem={({item}) => <Card view={item} data={this.state.temperatures}/> }
-            sliderWidth={this.wp(100)}
-            itemWidth={this.wp(90)}
+            sliderWidth={Utils.wp(100)}
+            itemWidth={Utils.wp(90)}
           />
         </View>
 
@@ -132,7 +117,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     alignItems: 'center',
     padding: 5,
   },
@@ -169,7 +154,7 @@ const styles = StyleSheet.create({
   btn: {
     width: 150,
     height: 50,
-    backgroundColor: 'rgb(183,32,33)',
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,

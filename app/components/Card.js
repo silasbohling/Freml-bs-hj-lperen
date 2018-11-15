@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import ForecastCell from './ForecastCell';
-import Moment from 'moment';
+import Utils from '@modules/Utils';
+import Colors from '@modules/Colors';
 
 export default class Card extends React.Component {
 
@@ -13,10 +14,7 @@ export default class Card extends React.Component {
   }
 
   configureChart = (temperatures) => {
-    const labels = temperatures.map((forecast) => {
-      const date = Moment.unix(forecast.time).utc();
-      return date.format('HH:mm');
-    });
+    const labels = temperatures.map((forecast) => Utils.formatUnixTimestamp(forecast.time, 'HH:mm'));
     const tempData = temperatures.map((forecast) => forecast.temp);
     const settingData = temperatures.map((forecast) => forecast.setting);
     this.setState({
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     marginVertical: 10,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     borderRadius: 5,
     padding: 10,
     shadowOffset: {width: 0, height: 1},

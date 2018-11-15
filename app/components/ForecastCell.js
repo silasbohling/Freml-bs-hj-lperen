@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Moment from 'moment';
+import Utils from '@modules/Utils';
 
 export default class ForecastCell extends React.Component {
 
@@ -18,8 +18,7 @@ export default class ForecastCell extends React.Component {
   }
 
   configureCell = (forecast) => {
-    const date = Moment.unix(forecast.time).utc();
-    const time = date.format("D/M HH:mm");
+    const time = Utils.formatUnixTimestamp(forecast.time, "D/M HH:mm");
     const temp = Math.round(forecast.temp*10)/10 + ' C°';
     const setting = Math.round(forecast.setting*10)/10;
     this.setState({ time, temp, setting });
