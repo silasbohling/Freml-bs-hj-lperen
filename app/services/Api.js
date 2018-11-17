@@ -1,6 +1,6 @@
 import React from 'react';
 
-const apiKey = "cd6afa332a7eab0b99d8103ca7e1d3b5";
+const apiKey = "1b3c34db593d57406c5376dd5235d4c1";
 
 const Api = {
   servername: "http://api.openweathermap.org/data/2.5",

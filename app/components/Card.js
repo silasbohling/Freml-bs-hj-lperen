@@ -29,7 +29,6 @@ export default class Card extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     if (this.props.view == 'list'){
       return(
         <View style={styles.forecast}>

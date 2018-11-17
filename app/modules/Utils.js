@@ -17,6 +17,10 @@ const Utils = {
     const y = 0*Math.pow(x,2)-0.05*x+3.78;
     return Math.round(y*10)/10;
   },
+  calculateChillFactor: (t, v) => {
+    const y = 33-((10*Math.sqrt(v)-v+10.5)*(33-t))/23.1;
+    return y;
+  },
   formatUnixTimestamp: (timestamp, format) => {
     const date = Moment.unix(timestamp).utc();
     return date.format("D/M HH:mm");

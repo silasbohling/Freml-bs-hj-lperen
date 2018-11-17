@@ -12,9 +12,11 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      averageTemp: '...',
       city: "...",
+      averageTemp: '...',
       settingTemp: "...",
+      averageChillFactor: "...",
+      chillFactorSetting: "...",
       temperatures: [],
       error: null,
       loading: false
@@ -33,19 +35,27 @@ export default class App extends React.Component {
       if (data.cod == 200) {
         var temperatures = [];
         for (var i = 0; i < 9; i++) {
-          const temp = data.list[i].main.temp;
           const time = data.list[i].dt;
-          const setting = Utils.calculateSetting(data.list[i].main.temp);
-          temperatures.push({ temp, time, setting });
+          const temp = data.list[i].main.temp;
+          const setting = Utils.calculateSetting(temp);
+          const wind = data.list[i].wind.speed;
+          const chillFactor = Utils.calculateChillFactor(temp, wind);
+          const chillFactorSetting = Utils.calculateSetting(chillFactor);
+          temperatures.push({ time, temp, setting, chillFactor, chillFactorSetting });
         }
-        var averageTemp = this.averageTemp(temperatures);
+        var averageTemp = this.average('temp', temperatures);
         const settingTemp = Utils.calculateSetting(averageTemp);
+        var averageChillFactor = this.average('chillFactor', temperatures);
+        const chillFactorSetting = Utils.calculateSetting(averageChillFactor);
         const city = data.city.name;
         averageTemp = Math.round(averageTemp*10)/10 + ' C°';
+        averageChillFactor = Math.round(averageChillFactor*10)/10 + ' C°';
         this.setState({
           error: null,
           averageTemp,
           settingTemp,
+          averageChillFactor,
+          chillFactorSetting,
           temperatures,
           city,
           loading: false
@@ -65,9 +75,9 @@ export default class App extends React.Component {
     });
   }
 
-  averageTemp = (list) => {
+  average = (key, list) => {
     var sum = 0;
-    list.forEach( item => sum += item.temp);
+    list.forEach( item => sum += item[key]);
     return sum/list.length;
   }
 
@@ -80,10 +90,12 @@ export default class App extends React.Component {
             <View style={styles.dataBlock}>
               <Text style={styles.label}>{ this.state.city }</Text>
               <Text style={styles.value}>{ this.state.averageTemp }</Text>
+              <Text style={[styles.value, {fontWeight: 'normal'}]}>{ this.state.averageChillFactor }</Text>
             </View>
             <View style={styles.dataBlock}>
               <Text style={styles.label}>Indstilling</Text>
               <Text style={styles.value}>{ this.state.settingTemp }</Text>
+              <Text style={[styles.value, {fontWeight: 'normal'}]}>{ this.state.chillFactorSetting }</Text>
             </View>
           </View>
           { this.state.loading &&
