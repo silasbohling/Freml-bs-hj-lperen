@@ -6,6 +6,7 @@ import Card from '@components/Card';
 import Utils from '@modules/Utils';
 import Colors from '@modules/Colors';
 import Config from './app/Config';
+import OptionSelector from '@components/OptionSelector';
 
 export default class App extends React.Component {
 
@@ -18,6 +19,7 @@ export default class App extends React.Component {
       averageChillFactor: "...",
       chillFactorSetting: "...",
       temperatures: [],
+      dataCount: 9,
       error: null,
       loading: false
     }
@@ -34,7 +36,7 @@ export default class App extends React.Component {
       console.log({data});
       if (data.cod == 200) {
         var temperatures = [];
-        for (var i = 0; i < 9; i++) {
+        for (var i = 0; i < this.state.dataCount; i++) {
           const time = data.list[i].dt;
           const temp = data.list[i].main.temp;
           const setting = Utils.calculateSetting(temp);
@@ -75,6 +77,11 @@ export default class App extends React.Component {
     });
   }
 
+  setDataInterval = (dataCount) => {
+    this.setState({ dataCount });
+    this.loadSetting();
+  }
+
   average = (key, list) => {
     var sum = 0;
     list.forEach( item => sum += item[key]);
@@ -98,12 +105,16 @@ export default class App extends React.Component {
               <Text style={[styles.value, {fontWeight: 'normal'}]}>{ this.state.chillFactorSetting }</Text>
             </View>
           </View>
+
           { this.state.loading &&
             <ActivityIndicator animating={this.state.loading} size="large" color="rgb(183,32,33)"/>
           }
-          <TouchableOpacity style={styles.btn} onPress={this.loadSetting}>
-            <Text style={styles.btnText}>OPDATER</Text>
-          </TouchableOpacity>
+
+          <OptionSelector
+            options={[{ label:"24 timer", value:9 }, { label:"48 timer", value:17 }, { label:"3 døgn", value:25 }, { label:"4 døgn", value:33 }]}
+            optionPressed={ this.setDataInterval }
+          />
+
           { this.state.error &&
             <View>
               <Text>Status kode: { this.state.error.status }</Text>
@@ -132,22 +143,21 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     alignItems: 'center',
     padding: 5,
+    paddingTop: 20
   },
   primary: {
-    flex: 0.65,
+    flex: 0.6,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   logo: {
     width: 175,
     height: 86.1,
-    marginBottom: 30,
   },
   dataContainer: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 0,
   },
   dataBlock: {
     width: '50%',
@@ -176,9 +186,9 @@ const styles = StyleSheet.create({
   btnText: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: '#fff',
+    color: Colors.btnText,
   },
   carouselContainer: {
-    flex: 0.35,
+    flex: 0.4,
   }
 });
