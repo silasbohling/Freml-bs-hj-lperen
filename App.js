@@ -20,7 +20,6 @@ export default class App extends React.Component {
       chillFactorSetting: "...",
       temperatures: [],
       dataCount: 9,
-      error: null,
       loading: false
     }
   }
@@ -53,7 +52,6 @@ export default class App extends React.Component {
         averageTemp = Math.round(averageTemp*10)/10 + ' C°';
         averageChillFactor = Math.round(averageChillFactor*10)/10 + ' C°';
         this.setState({
-          error: null,
           averageTemp,
           settingTemp,
           averageChillFactor,
@@ -67,7 +65,7 @@ export default class App extends React.Component {
           status: data.cod,
           message: data.message
         }
-        this.setState({ error, loading: false });
+        console.log({ error });
       }
 
     })
@@ -106,26 +104,17 @@ export default class App extends React.Component {
             </View>
           </View>
 
-          { this.state.loading &&
-            <ActivityIndicator animating={this.state.loading} size="large" color="rgb(183,32,33)"/>
-          }
+          <ActivityIndicator animating={this.state.loading} size="large" color={Colors.primary} style={{position: 'absolute', top: Utils.hp(41)}} />
 
           <OptionSelector
             options={[{ label:"24 timer", value:9 }, { label:"48 timer", value:17 }, { label:"3 døgn", value:25 }, { label:"4 døgn", value:33 }]}
             optionPressed={ this.setDataInterval }
           />
-
-          { this.state.error &&
-            <View>
-              <Text>Status kode: { this.state.error.status }</Text>
-              <Text>Error: { this.state.error.message }</Text>
-            </View>
-          }
         </View>
 
         <View style={styles.carouselContainer}>
           <Carousel
-            data={["list", "chart"]}
+            data={["chart", "list"]}
             renderItem={({item}) => <Card view={item} data={this.state.temperatures}/> }
             sliderWidth={Utils.wp(100)}
             itemWidth={Utils.wp(90)}

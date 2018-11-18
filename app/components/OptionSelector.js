@@ -1,26 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
 import Colors from '@modules/Colors.js';
+import Utils from '@modules/Utils';
 
 export default class OptionSelector extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      selected: 0,
+      offset: new Animated.Value(0)
     }
+
+    this.width = Utils.wp(80)
   }
 
   _optionSelected = (selected, value) => {
-    this.setState({ selected })
-    this.props.optionPressed(value)
+    Animated.timing( this.state.offset, {
+      toValue: this.width/this.props.options.length*selected,
+      duration: 300
+    }).start( () => {
+      this.props.optionPressed(value)
+    })
   }
 
   render() {
     const renderedOptions = this.props.options.map( (option, index) => {
       return(
         <TouchableOpacity
-          style={[styles.option, (this.state.selected == index) ? styles.selected : null]}
+          style={ styles.option }
           onPress={ () => this._optionSelected(index, option.value) }
           key={index}>
           <Text style={styles.label}>{ option.label }</Text>
@@ -28,9 +35,11 @@ export default class OptionSelector extends React.Component {
       )
     })
 
-
     return(
-      <View style={styles.container}>
+      <View style={[styles.container, { width: this.width }]}>
+        <Animated.View
+          style={[ styles.selected, { width: this.width/this.props.options.length, left: this.state.offset } ]}
+        />
         {renderedOptions}
       </View>
     )
@@ -45,7 +54,9 @@ const styles = StyleSheet.create({
   },
   option: {
     borderRadius: 10,
-    padding: 10
+    paddingVertical: 10,
+    flex: 1,
+    alignItems: 'center'
   },
   label: {
     color: Colors.btnText,
@@ -54,5 +65,9 @@ const styles = StyleSheet.create({
   },
   selected: {
     backgroundColor: Colors.primary,
+     position: 'absolute',
+     top: 0,
+     bottom: 0,
+     borderRadius: 10,
   }
 })
