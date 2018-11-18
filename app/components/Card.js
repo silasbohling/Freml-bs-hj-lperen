@@ -27,7 +27,6 @@ export default class Card extends React.Component {
         </View>
       );
     } else if (this.props.view == 'chart'){
-      console.log(this.state.chartData);
       return(
         <View style={styles.forecast}>
           <Text style={styles.forecastTitle}>Temperature de næste 24 timer:</Text>

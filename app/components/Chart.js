@@ -31,8 +31,7 @@ export default class Chart extends React.Component {
       { seriesName: 'setting', data: [], color: Colors.setting }
     ]
     temperatures.forEach((forecast) => {
-      const label = Utils.formatUnixTimestamp(forecast.time, 'HH:mm')
-      console.log({label});
+      const label = Utils.formatUnixTimestamp(forecast.time, 'HH:mm D/M')
       chartData[0].data.push({ x: label, y: forecast.temp })
       chartData[1].data.push({ x: label, y: forecast.setting })
     })
