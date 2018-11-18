@@ -23,7 +23,7 @@ const Utils = {
   },
   formatUnixTimestamp: (timestamp, format) => {
     const date = Moment.unix(timestamp).utc();
-    return date.format("D/M HH:mm");
+    return date.format(format);
   }
 }
 

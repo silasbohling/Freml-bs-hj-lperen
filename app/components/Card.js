@@ -1,31 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import ForecastCell from './ForecastCell';
+import ForecastCell from '@components/ForecastCell';
 import Utils from '@modules/Utils';
 import Colors from '@modules/Colors';
+import Chart from '@components/Chart';
 
 export default class Card extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      chartData: {}
-    }
-  }
 
-  configureChart = (temperatures) => {
-    const labels = temperatures.map((forecast) => Utils.formatUnixTimestamp(forecast.time, 'HH:mm'));
-    const tempData = temperatures.map((forecast) => forecast.temp);
-    const settingData = temperatures.map((forecast) => forecast.setting);
-    this.setState({
-      chartData: {
-        labels,
-        datasets: [
-          {data: tempData},
-          {data: settingData}
-        ]
-      }
-    })
+    }
   }
 
   render() {
@@ -41,10 +27,11 @@ export default class Card extends React.Component {
         </View>
       );
     } else if (this.props.view == 'chart'){
+      console.log(this.state.chartData);
       return(
         <View style={styles.forecast}>
           <Text style={styles.forecastTitle}>Temperature de næste 24 timer:</Text>
-
+          <Chart data={this.props.data} />
         </View>
       );
     }
