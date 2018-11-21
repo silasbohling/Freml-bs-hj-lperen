@@ -3225,6 +3225,7 @@ jest-environment-node@^23.4.0:
 jest-expo@^31.0.0:
   version "31.0.0"
   resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-31.0.0.tgz#6f191eebb646b2654388f5166311385c118a7924"
+  integrity sha512-GWHGY4M53dZljIzEJdGCntZFvWvF7tf6zAhCURaNSLpZ0o7qtVKqjZrjXI8bp+58Hr3O9N9KhWJYKFVzmMLAFQ==
   dependencies:
     "@babel/core" "^7.1.0"
     babel-core "^7.0.0-bridge.0"
@@ -4682,6 +4683,14 @@ react-native-gesture-handler@1.0.9:
 react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
+
+react-native-pure-chart@0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/react-native-pure-chart/-/react-native-pure-chart-0.0.24.tgz#6a06d803d6bce0d6cdb94ee426e32cfce95f19a1"
+  integrity sha512-YczRMLyR1PY5u5qpYc4ScrYdbPVAD9GxIdnR8m7zbttwytlHVjn90+buYBnHW3Lm/JXHVzCMjTQkXQ5cskvB+Q==
+  dependencies:
+    lodash "^4.17.4"
+    prop-types "^15.6.0"
 
 react-native-reanimated@1.0.0-alpha.10:
   version "1.0.0-alpha.10"
