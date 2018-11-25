@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ForeCastCell render correctly 1`] = `
+<View
+  style={
+    Object {
+      "borderBottomColor": "rgba(0,0,0,0.3)",
+      "borderBottomWidth": 1,
+      "paddingHorizontal": 2,
+      "paddingVertical": 7,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+          },
+        ]
+      }
+    >
+      5/1 12:11
+    </Text>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "fontWeight": "600",
+              "marginRight": 5,
+            },
+          ]
+        }
+      >
+        3.5 C°
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+            },
+          ]
+        }
+      >
+        (
+        6
+        )
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+            },
+          ]
+        }
+      >
+        12.3 C°
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+            },
+          ]
+        }
+      >
+        (
+        8
+        )
+      </Text>
+    </View>
+  </View>
+</View>
+`;
