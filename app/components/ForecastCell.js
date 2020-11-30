@@ -1,31 +1,31 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Utils from '@modules/Utils';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import Utils from '@modules/Utils'
 
 export default class ForecastCell extends React.Component {
 
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
-      time: "",
-      temp: "",
-      setting: "",
-      chillFactor: "",
-      chillFactorSetting: ""
+      time: '',
+      temp: '',
+      setting: '',
+      chillFactor: '',
+      chillFactorSetting: ''
     }
   }
 
   componentDidMount(){
-    this.configureCell(this.props.forecast);
+    this.configureCell(this.props.forecast)
   }
 
   configureCell = (forecast) => {
-    const time = Utils.formatUnixTimestamp(forecast.time, "D/M HH:mm");
-    const temp = Math.round(forecast.temp*10)/10 + ' C°';
-    const setting = Math.round(forecast.setting*10)/10;
-    const chillFactor = Math.round(forecast.chillFactor*10)/10 + ' C°';
-    const chillFactorSetting = Math.round(forecast.chillFactorSetting*10)/10;
-    this.setState({ time, temp, setting, chillFactor, chillFactorSetting });
+    const time = Utils.formatUnixTimestamp(forecast.time, 'D/M HH:mm')
+    const temp = Math.round(forecast.temp*10)/10 + ' C°'
+    const setting = Math.round(forecast.setting*10)/10
+    const chillFactor = Math.round(forecast.chillFactor*10)/10 + ' C°'
+    const chillFactorSetting = Math.round(forecast.chillFactorSetting*10)/10
+    this.setState({ time, temp, setting, chillFactor, chillFactorSetting })
   }
 
   render () {
@@ -46,7 +46,7 @@ export default class ForecastCell extends React.Component {
           </View>
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginRight: 5
   }
-});
+})

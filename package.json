@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node_modules/.bin/jest"
+    "test": "node_modules/.bin/jest",
+    "eslint": "node_modules/.bin/eslint"
   },
   "dependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
@@ -21,6 +22,8 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
+    "eslint": "^5.12.0",
+    "eslint-config-react-native": "^4.0.0",
     "jest-expo": "^31.0.0"
   },
   "jest": {

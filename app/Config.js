@@ -1,7 +1,9 @@
-import React from 'react';
+//
+// Configuration file
+//
 
 const Config = {
-  cityId: "6543938"
+  cityId: '6543938'
 }
 
-export default Config;
+export default Config

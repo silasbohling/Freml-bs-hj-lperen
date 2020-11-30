@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
-import Colors from '@modules/Colors.js';
-import Utils from '@modules/Utils';
+import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native'
+import Colors from '@modules/Colors.js'
+import Utils from '@modules/Utils'
 
 export default class OptionSelector extends React.Component {
 
@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
   },
   selected: {
     backgroundColor: Colors.primary,
-     position: 'absolute',
-     top: 0,
-     bottom: 0,
-     borderRadius: 10,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    borderRadius: 10,
   }
 })

@@ -1,23 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ActivityIndicator, FlatList, Dimensions } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import Api from '@services/Api';
-import Card from '@components/Card';
-import Utils from '@modules/Utils';
-import Colors from '@modules/Colors';
-import Config from './app/Config';
-import OptionSelector from '@components/OptionSelector';
+import React from 'react'
+import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native'
+import Carousel from 'react-native-snap-carousel'
+import Api from '@services/Api'
+import Card from '@components/Card'
+import Utils from '@modules/Utils'
+import Colors from '@modules/Colors'
+import Config from './app/Config'
+import OptionSelector from '@components/OptionSelector'
 
 export default class App extends React.Component {
 
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
-      city: "...",
+      city: '...',
       averageTemp: '...',
-      settingTemp: "...",
-      averageChillFactor: "...",
-      chillFactorSetting: "...",
+      settingTemp: '...',
+      averageChillFactor: '...',
+      chillFactorSetting: '...',
       temperatures: [],
       dataCount: 9,
       loading: false
@@ -25,32 +25,32 @@ export default class App extends React.Component {
   }
 
   componentDidMount(){
-    this.loadSetting();
+    this.loadSetting()
   }
 
   loadSetting = () => {
-    this.setState({ loading: true });
+    this.setState({ loading: true })
 
     Api.currentCityWeather(Config.cityId).then( (data) => {
-      console.log({data});
-      if (data.cod == 200) {
-        var temperatures = [];
-        for (var i = 0; i < this.state.dataCount; i++) {
-          const time = data.list[i].dt;
-          const temp = data.list[i].main.temp;
-          const setting = Utils.calculateSetting(temp);
-          const wind = data.list[i].wind.speed;
-          const chillFactor = Utils.calculateChillFactor(temp, wind);
-          const chillFactorSetting = Utils.calculateSetting(chillFactor);
-          temperatures.push({ time, temp, setting, chillFactor, chillFactorSetting });
+      console.log({data})
+      if (data.cod === 200) {
+        const temperatures = []
+        for (let i = 0; i < this.state.dataCount; i++) {
+          const time = data.list[i].dt
+          const temp = data.list[i].main.temp
+          const setting = Utils.calculateSetting(temp)
+          const wind = data.list[i].wind.speed
+          const chillFactor = Utils.calculateChillFactor(temp, wind)
+          const chillFactorSetting = Utils.calculateSetting(chillFactor)
+          temperatures.push({ time, temp, setting, chillFactor, chillFactorSetting })
         }
-        var averageTemp = this.average('temp', temperatures);
-        const settingTemp = Utils.calculateSetting(averageTemp);
-        var averageChillFactor = this.average('chillFactor', temperatures);
-        const chillFactorSetting = Utils.calculateSetting(averageChillFactor);
-        const city = data.city.name;
-        averageTemp = Math.round(averageTemp*10)/10 + ' C°';
-        averageChillFactor = Math.round(averageChillFactor*10)/10 + ' C°';
+        let averageTemp = this.average('temp', temperatures)
+        const settingTemp = Utils.calculateSetting(averageTemp)
+        let averageChillFactor = this.average('chillFactor', temperatures)
+        const chillFactorSetting = Utils.calculateSetting(averageChillFactor)
+        const city = data.city.name
+        averageTemp = Math.round(averageTemp*10)/10 + ' C°'
+        averageChillFactor = Math.round(averageChillFactor*10)/10 + ' C°'
         this.setState({
           averageTemp,
           settingTemp,
@@ -59,31 +59,31 @@ export default class App extends React.Component {
           temperatures,
           city,
           loading: false
-        });
+        })
       } else {
         const error = {
           status: data.cod,
           message: data.message
         }
-        console.log({ error });
+        console.log({ error })
       }
 
     })
-    .catch( (error) => {
-      console.log({error});
-      this.setState({ loading: false });
-    });
+      .catch( (error) => {
+        console.log({error})
+        this.setState({ loading: false })
+      })
   }
 
   setDataInterval = (dataCount) => {
-    this.setState({ dataCount });
-    this.loadSetting();
+    this.setState({ dataCount })
+    this.loadSetting()
   }
 
   average = (key, list) => {
-    var sum = 0;
-    list.forEach( item => sum += item[key]);
-    return sum/list.length;
+    let sum = 0
+    list.forEach( item => sum += item[key])
+    return sum/list.length
   }
 
   render() {
@@ -95,26 +95,26 @@ export default class App extends React.Component {
             <View style={styles.dataBlock}>
               <Text style={styles.label}>{ this.state.city }</Text>
               <Text style={styles.value}>{ this.state.averageTemp }</Text>
-              <Text style={[styles.value, {fontWeight: 'normal'}]}>{ this.state.averageChillFactor }</Text>
+              <Text style={[styles.value, styles.normalWeight]}>{ this.state.averageChillFactor }</Text>
             </View>
             <View style={styles.dataBlock}>
               <Text style={styles.label}>Indstilling</Text>
               <Text style={styles.value}>{ this.state.settingTemp }</Text>
-              <Text style={[styles.value, {fontWeight: 'normal'}]}>{ this.state.chillFactorSetting }</Text>
+              <Text style={[styles.value, styles.normalWeight]}>{ this.state.chillFactorSetting }</Text>
             </View>
           </View>
 
-          <ActivityIndicator animating={this.state.loading} size="large" color={Colors.primary} style={{position: 'absolute', top: Utils.hp(41)}} />
+          <ActivityIndicator animating={this.state.loading} size="large" color={Colors.primary} style={styles.activityIndicator} />
 
           <OptionSelector
-            options={[{ label:"24 timer", value:9 }, { label:"48 timer", value:17 }, { label:"3 døgn", value:25 }, { label:"4 døgn", value:33 }]}
+            options={[{ label:'24 timer', value:9 }, { label:'48 timer', value:17 }, { label:'3 døgn', value:25 }, { label:'4 døgn', value:33 }]}
             optionPressed={ this.setDataInterval }
           />
         </View>
 
         <View style={styles.carouselContainer}>
           <Carousel
-            data={["chart", "list"]}
+            data={['chart', 'list']}
             renderItem={({item}) => <Card view={item} data={this.state.temperatures}/> }
             sliderWidth={Utils.wp(100)}
             itemWidth={Utils.wp(90)}
@@ -122,7 +122,7 @@ export default class App extends React.Component {
         </View>
 
       </View>
-    );
+    )
   }
 }
 
@@ -162,22 +162,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
   },
-  btn: {
-    width: 150,
-    height: 50,
-    backgroundColor: Colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  btnText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: Colors.btnText,
+  normalWeight: {
+    fontWeight: 'normal'
   },
   carouselContainer: {
     flex: 0.4,
+  },
+  activityIndicator: {
+    position: 'absolute',
+    top: Utils.hp(41)
   }
-});
+})

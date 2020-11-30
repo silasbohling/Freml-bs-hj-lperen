@@ -1,10 +1,15 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import PureChart from 'react-native-pure-chart';
-import Colors from '@modules/Colors';
-import Utils from '@modules/Utils';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { View, StyleSheet } from 'react-native'
+import PureChart from 'react-native-pure-chart'
+import Colors from '@modules/Colors'
+import Utils from '@modules/Utils'
 
 export default class Chart extends React.Component {
+
+  static propTypes = {
+    data: PropTypes.array.isRequired
+  }
 
   constructor(props) {
     super(props)

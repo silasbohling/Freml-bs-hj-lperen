@@ -1,0 +1,10 @@
+{
+  "extends": ["react-native"],
+  "rules": {
+    "import/no-unresolved": [2, { "ignore": ["@"] }],
+    "no-console": 0,
+    "no-invalid-this": 0,
+    "no-use-before-define": 0,
+    "react/jsx-no-bind": 0
+  }
+}

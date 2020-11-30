@@ -1,39 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-import ForecastCell from '@components/ForecastCell';
-import Utils from '@modules/Utils';
-import Colors from '@modules/Colors';
-import Chart from '@components/Chart';
+import React from 'react'
+import { StyleSheet, Text, View, FlatList } from 'react-native'
+import ForecastCell from '@components/ForecastCell'
+import Colors from '@modules/Colors'
+import Chart from '@components/Chart'
 
-export default class Card extends React.Component {
+export default function Card(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
+  if (props.view === 'list'){
+    return(
+      <View style={styles.forecast}>
+        <Text style={styles.forecastTitle}>Temperature de næste 24 timer:</Text>
+        <FlatList
+          data={ props.data }
+          keyExtractor={ (item) => item.time.toString() }
+          renderItem={ ({item}) => <ForecastCell forecast={item}/> }
+        />
+      </View>
+    )
 
-    }
-  }
-
-  render() {
-    if (this.props.view == 'list'){
-      return(
-        <View style={styles.forecast}>
-          <Text style={styles.forecastTitle}>Temperature de næste 24 timer:</Text>
-          <FlatList
-            data={ this.props.data }
-            keyExtractor={ (item) => item.time.toString() }
-            renderItem={ ({item}) => <ForecastCell forecast={item}/> }
-          />
-        </View>
-      );
-    } else if (this.props.view == 'chart'){
-      return(
-        <View style={styles.forecast}>
-          <Text style={styles.forecastTitle}>Temperature de næste 24 timer:</Text>
-          <Chart data={this.props.data} />
-        </View>
-      );
-    }
+  } else if (props.view === 'chart'){
+    return(
+      <View style={styles.forecast}>
+        <Text style={styles.forecastTitle}>Temperature de næste 24 timer:</Text>
+        <Chart data={props.data} />
+      </View>
+    )
   }
 }
 
@@ -55,4 +46,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 5
   }
-});
+})

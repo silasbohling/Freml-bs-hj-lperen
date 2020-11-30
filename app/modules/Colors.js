@@ -1,4 +1,6 @@
-import React from 'react';
+//
+// Colors configuration file
+// 
 
 const Colors = {
   primary: 'rgb(183,32,33)',
@@ -10,4 +12,4 @@ const Colors = {
   setting: 'rgba(0,0,0, 0.8)'
 }
 
-export default Colors;
+export default Colors
