@@ -10,7 +10,7 @@ const Api = {
 
 const fetchFromServer = async (method, path, data) => {
   const url = Api.servername + path + '&APPID=' + apiKey
-  console.log({method, url, data})
+  // console.log({method, url, data})
 
   return fetch( url, {
     method: method,

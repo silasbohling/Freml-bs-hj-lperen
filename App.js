@@ -33,7 +33,7 @@ export default class App extends React.Component {
 
     Api.currentCityWeather(Config.cityId).then( (data) => {
       console.log({data})
-      if (data.cod === 200) {
+      if (data.cod === "200") {
         const temperatures = []
         for (let i = 0; i < this.state.dataCount; i++) {
           const time = data.list[i].dt
